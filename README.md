@@ -63,10 +63,12 @@ pipx poetry
 poetry install
 ```
 
-### How to run
+### How to run different services 
 ```
 cd IOT-Smart-fridge-backend/smart-fridge
-poetry run api/screen
+poetry run api
+or
+poetry run sreen
 ```
 
 ### How to run tests
