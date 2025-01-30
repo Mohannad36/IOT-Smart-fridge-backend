@@ -21,8 +21,8 @@
 
 ## Dependencies
 * [poetry](https://python-poetry.org/)
-* [flask](https://flask.palletsprojects.com/en/stable/)
-* [pytest](https://docs.pytest.org/en/stable/)
+ * [flask](https://flask.palletsprojects.com/en/stable/)
+ * [pytest](https://docs.pytest.org/en/stable/)
 
 
 *** ***
