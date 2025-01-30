@@ -4,7 +4,7 @@
 
 * [Devboard MainBoard](https://www.raspberrypi.com/products/raspberry-pi-5/)
 * [Cheaper Option](https://www.raspberrypi.com/)
-  * [Sensor Units](https://www.espressif.com/en/products/socs/esp32)
+* [Sensor Units](https://www.espressif.com/en/products/socs/esp32)
    #### Components
    * [Door Sensor](https://www.kjell.com/se/produkter/smarta-hem/smarta-sensorer/smarta-magnetkontakter/tp-link-tapo-t110-magnetsensor-p65257)
 
@@ -20,9 +20,9 @@
 * Recipe suggestions based on available ingredients
 
 ## Dependencies
-* [poetry](https://python-poetry.org/)
- * [flask](https://flask.palletsprojects.com/en/stable/)
- * [pytest](https://docs.pytest.org/en/stable/)
+1. [poetry](https://python-poetry.org/)
+  * [flask](https://flask.palletsprojects.com/en/stable/)
+  * [pytest](https://docs.pytest.org/en/stable/)
 
 
 *** ***
