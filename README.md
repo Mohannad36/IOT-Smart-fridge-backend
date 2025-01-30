@@ -67,12 +67,12 @@ poetry install
 ```
 cd IOT-Smart-fridge-backend/smart-fridge
 ```
-```
-poetry run api
-```
-```
-poetry run screen
-```
+
+| Command                   | Action                  |
+| :------------------------ | :---------------------- |
+| `poetry run api`          | Starts the restless api |
+| `poetry run screen`       | Starts screen manager   |
+
 
 ### How to run tests
 ```
