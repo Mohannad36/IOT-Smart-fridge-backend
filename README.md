@@ -13,3 +13,6 @@
 ### How to run
 1. cd IOT-Smart-fridge-backend/fridge-api
 2. poetry run api
+
+### Communication Architecture
+![Described Communication Architecture](IOT-Smart-fridge.drawio.png "Communication Architecture")
