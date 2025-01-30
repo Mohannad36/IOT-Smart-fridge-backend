@@ -8,7 +8,6 @@
    #### Components
    * [Door Sensor](https://www.kjell.com/se/produkter/smarta-hem/smarta-sensorer/smarta-magnetkontakter/tp-link-tapo-t110-magnetsensor-p65257)
 
-![](FDiagram.png)
 
 *** ***
 
@@ -81,3 +80,4 @@ $ poetry run pytest
 * **REST**less for external integrations
   
 ![Described Communication Architecture](IOT-Smart-fridge.drawio.png "Communication Architecture")
+![Described Topology Architecture](FDiagram.png "Topology Architecture")
