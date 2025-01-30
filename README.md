@@ -66,7 +66,7 @@ poetry install
 ### How to run
 ```
 cd IOT-Smart-fridge-backend/smart-fridge
-poetry run api
+poetry run api/screen
 ```
 
 ### How to run tests
