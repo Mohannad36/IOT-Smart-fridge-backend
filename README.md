@@ -71,7 +71,7 @@ cd IOT-Smart-fridge-backend/smart-fridge
 poetry run api
 ```
 ```
-poetry run sreen
+poetry run screen
 ```
 
 ### How to run tests
