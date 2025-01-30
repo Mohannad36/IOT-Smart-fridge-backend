@@ -88,5 +88,5 @@ poetry run pytest
 * **TCP** sockets for data transfer between ESP32 and Raspberry Pi
 * **REST**less for external integrations
 
-![Described Topology Architecture](FDiagram.png "Topology Architecture")
+![Described Topology Architecture](Diagram.png "Topology Architecture")
 ![Described Communication Architecture](IOT-Smart-fridge.drawio.png "Communication Architecture")
