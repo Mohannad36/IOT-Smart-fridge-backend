@@ -66,8 +66,11 @@ poetry install
 ### How to run different services 
 ```
 cd IOT-Smart-fridge-backend/smart-fridge
+```
+```
 poetry run api
-or
+```
+```
 poetry run sreen
 ```
 
