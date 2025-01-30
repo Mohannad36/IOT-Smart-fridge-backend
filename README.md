@@ -24,14 +24,14 @@
 * [poetry](https://python-poetry.org/)
 * [flask](https://flask.palletsprojects.com/en/stable/)
 
+
+*** ***
+
+
 ### Hardware Setup
 
 1. **Rasberry Pi with Front Display**: Mounted on the fridge door, Serves as the main controol unit and with user interface  
 2. **ESP32 Inside the Fridge**: Will manage internal sensors and cameras that will be mounted on the back and pointed in directions that will not discriminate the customer
-
-
-*** ***
-
 
 ### Components List
 
