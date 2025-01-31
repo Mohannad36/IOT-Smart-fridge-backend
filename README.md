@@ -10,7 +10,7 @@
 * [Hall Sensor](https://www.elfa.se/sv/givare/hall-och-reed-sensorer/halleffektsensorer/c/cat-DNAV_PL_130601)
 * [Display](https://www.amazon.se/s?k=Raspberry+Pi+Screen+7+inch+DSI+Touch+Screen&crid=3PAK537A9J8W&sprefix=raspberry+pi+screen+7+inch+dsi+touch+screen%2Caps%2C117&ref=nb_sb_noss)
 * [Camera](https://www.electrokit.com/en/esp32-cam-utvecklingskort-med-wifi-och-kamera)
-* [Resistors & jump wires etc](https://www.digikey.se/?gclsrc=aw.ds&&utm_adgroup=General&utm_source=google&utm_medium=cpc&utm_campaign=SE_Brand_Digi-Key&utm_term=digikey&productid=&utm_content=General&utm_id=go_cmp-237650306_adg-13837730786_ad-535737722073_kwd-13013986_dev-c_ext-_prd-_sig-Cj0KCQiA4-y8BhC3ARIsAHmjC_HThvmMRlUaWEhMMsr9w_Qud-Xe6K-GQS8t3ySLGSlWILlTkvvRQnoaAhxAEALw_wcB&gad_source=1&gclid=Cj0KCQiA4-y8BhC3ARIsAHmjC_HThvmMRlUaWEhMMsr9w_Qud-Xe6K-GQS8t3ySLGSlWILlTkvvRQnoaAhxAEALw_wcB&gclsrc=aw.ds)
+* [Resistors & jump wires](https://www.digikey.se/?gclsrc=aw.ds&&utm_adgroup=General&utm_source=google&utm_medium=cpc&utm_campaign=SE_Brand_Digi-Key&utm_term=digikey&productid=&utm_content=General&utm_id=go_cmp-237650306_adg-13837730786_ad-535737722073_kwd-13013986_dev-c_ext-_prd-_sig-Cj0KCQiA4-y8BhC3ARIsAHmjC_HThvmMRlUaWEhMMsr9w_Qud-Xe6K-GQS8t3ySLGSlWILlTkvvRQnoaAhxAEALw_wcB&gad_source=1&gclid=Cj0KCQiA4-y8BhC3ARIsAHmjC_HThvmMRlUaWEhMMsr9w_Qud-Xe6K-GQS8t3ySLGSlWILlTkvvRQnoaAhxAEALw_wcB&gclsrc=aw.ds)
 
 
 *** ***
