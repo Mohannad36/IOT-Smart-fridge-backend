@@ -30,6 +30,7 @@
 * [flask-restful](https://flask-restful.readthedocs.io/en/latest/)
 * [pytest](https://docs.pytest.org/en/stable/)
 * [sqlite3](https://www.sqlite.org/)
+* [importlib](https://docs.python.org/3/library/importlib.html
 
 
 *** ***
