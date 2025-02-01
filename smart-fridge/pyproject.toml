@@ -6,10 +6,12 @@ authors = [
     {name = "ghosthookcc",email = "kasperthornsten@gmail.com"}
 ]
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.12.8"
 dependencies = [
     "flask (>=3.1.0,<4.0.0)",
-    "pytest (>=8.3.4,<9.0.0)"
+    "pytest (>=8.3.4,<9.0.0)",
+    "flask-sqlalchemy (>=3.1.1,<4.0.0)",
+    "flask-restful (>=0.3.10,<0.4.0)",
 ]
 
 [tool.poetry]
@@ -17,8 +19,8 @@ packages = [ {include = "restless", from = "src"},
              {include = "screen", from = "src"} ]
 
 [tool.poetry.scripts]
-api = "restless.api:main"
-screen = "screen.screen:main"
+restless-service = "restless.app:main"
+screen-service = "screen.screen:main"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
