@@ -1,0 +1,19 @@
+{
+  "Endpoints" :
+  [
+     {
+      "WeightSensor" :
+      {
+        "baseRoute" : "/sensor/weight/",
+        "subRoutes" : ["getById", "getOccupiedById"]
+      }
+    },
+    {
+      "User" :
+      {
+        "baseRoute" : "/user/",
+        "subRoutes" : ["getById", "getAll"]
+      }
+    }
+  ]
+}
