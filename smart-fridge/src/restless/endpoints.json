@@ -1,18 +1,48 @@
 {
-  "Endpoints" :
+  "http://127.0.0.1:5000" :
   [
      {
       "WeightSensor" :
       {
         "baseRoute" : "/sensor/weight/",
-        "subRoutes" : ["getById", "getOccupiedById"]
+        "action" : null,
+        "subRoutes" : 
+        [
+          {
+            "getById" :
+            {
+                "action" : "GetWeightSensorById"
+            }
+          },
+          {
+            "getOccupiedById" : 
+            {
+                "action" : "IsWeightSensorOccupiedById"
+            }
+          }
+        ]
       }
     },
     {
       "User" :
       {
         "baseRoute" : "/user/",
-        "subRoutes" : ["getById", "getAll"]
+        "action" : null,
+        "subRoutes" : 
+        [
+          {
+            "getById" : 
+            {
+                "action": null
+            }
+          },
+          {
+            "getAll" :
+            {
+                "action" : null
+            }
+          }
+        ]
       }
     }
   ]
