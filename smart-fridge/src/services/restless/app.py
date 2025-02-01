@@ -7,9 +7,9 @@ from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Api, Resource
 
-from services.restless.routing.endpointParser import parseEndpoints
+from endpointParser import parseEndpoints
 
-from models import sqlite, User
+from database.models import sqlite, User
 
 from collections.abc import Callable
 
@@ -44,7 +44,6 @@ class restlessApiPlug:
         if (self.manager == None or action == None or endpoint == None): return
         self.manager.add_resource(action, endpoint)
     def dynamicLoadResources(self) -> None:
-        print(self.absoluteEndpointsPath)
         endpoints: dict = parseEndpoints(self.absoluteEndpointsPath)
         for endpointUrl, endpointAction in endpoints.items():
             if endpointAction == None: continue

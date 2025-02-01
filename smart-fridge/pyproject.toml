@@ -16,12 +16,12 @@ dependencies = [
 ]
 
 [tool.poetry]
-packages = [ {include = "restless", from = "src"},
-             {include = "screen", from = "src"} ]
+packages = [ {include = "services/restless", from = "src"},
+             {include = "services/screen", from = "src"} ]
 
 [tool.poetry.scripts]
-restless-service = "restless.app:main"
-screen-service = "screen.screen:main"
+restless-service = "services.restless.app:main"
+screen-service = "services.screen.screen:main"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
