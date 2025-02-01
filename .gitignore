@@ -1,3 +1,6 @@
+smart-fridge/src/__pycache__
 smart-fridge/src/restless/__pycache__
 smart-fridge/src/screen/__pycache__
 smart-fridge/tests/__pycache__
+
+smart-fridge/src/restless/db.persistent.sqlite
