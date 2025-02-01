@@ -15,7 +15,7 @@ class restlessApiPlug:
     def __init__(self,
                  applicationPath: str,
                  endpointsConfigPath: str, sqliteDatabaseName: str,
-                 newApplication: bool = True, application: Flask = None) -> restlessApiPlug:
+                 newApplication: bool = True, application: Flask = None) -> None:
         self.application: Flask = application
         if self.application == None:
             self.application = Flask(__name__)
