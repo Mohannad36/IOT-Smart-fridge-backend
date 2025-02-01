@@ -26,6 +26,8 @@
 ## Dependencies
 * [poetry](https://python-poetry.org/)
 * [flask](https://flask.palletsprojects.com/en/stable/)
+* [flask-sqlalchemy](https://flask-sqlalchemy.readthedocs.io/en/stable/)
+* [flask-restful](https://flask-restful.readthedocs.io/en/latest/)
 * [pytest](https://docs.pytest.org/en/stable/)
 
 
