@@ -1,6 +1,6 @@
 import json
 
-from utils import stringToClassUsingModule
+from modules.utils import stringToClassUsingModule
 
 def parseEndpoints(endpointsConfigPath: str) -> dict:
     outEndpoints: dict = {}
