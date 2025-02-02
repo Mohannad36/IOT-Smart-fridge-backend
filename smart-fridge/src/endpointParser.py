@@ -3,7 +3,7 @@ import json
 from utils import stringToClassUsingModule
 
 def parseEndpoints(endpointsConfigPath: str) -> dict:
-    outData: dict = {}
+    outEndpoints: dict = {}
     baseUrl: str = None
     with open(endpointsConfigPath) as config:
         data = json.load(config)
@@ -27,7 +27,7 @@ def parseEndpoints(endpointsConfigPath: str) -> dict:
                 endpointUrl = baseUrl + baseRouteUrl
                 endpointAction = base["action"]
 
-                constructKeyPair(outData, endpointUrl, endpointAction)
+                constructEndpointKeyPair(outEndpoints, endpointUrl, endpointAction)
 
                 subRoutes = base["subRoutes"]
                 subRouteUrl = None
@@ -35,10 +35,10 @@ def parseEndpoints(endpointsConfigPath: str) -> dict:
                     subRouteUrl = next(iter(route.keys()))
                     endpointUrl = baseRouteUrl + subRouteUrl #baseUrl + baseRouteUrl + subRouteUrl
                     endpointAction = stringToClassUsingModule(route[subRouteUrl]["action"], "services.restless.routing.routeActions")
-                    constructKeyPair(outData, endpointUrl, endpointAction)
-    return outData
+                    constructEndpointKeyPair(outEndpoints, endpointUrl, endpointAction)
+    return outEndpoints
 
-def constructKeyPair(endpoints: dict, endpointUrl: str, endpointAction: str):
+def constructEndpointKeyPair(endpoints: dict, endpointUrl: str, endpointAction: str):
     endpoints[endpointUrl] = endpointAction
 
 def main() -> None:
