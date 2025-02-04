@@ -77,7 +77,10 @@ class ServerSocket:
         self.receiver.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         
         self.host = host
-        self.port = port    
+        self.port = port
+
+        self.localHost = localHost
+        self.localPort = localPort
 
         self.clients = []
 
@@ -102,7 +105,7 @@ class ServerSocket:
 
 def main() -> None:
     server: ServerSocket = ServerSocket()
-    server.start(3)
+    server.start(5)
 
 if __name__ == "__main__":
     main()
