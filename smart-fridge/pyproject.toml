@@ -20,6 +20,7 @@ packages = [ {include = "services/restless", from = "src"},
              {include = "services/screen", from = "src"} ]
 
 [tool.poetry.scripts]
+receiver-service = "services.receiver.receiver:main"
 restless-service = "services.restless.app:main"
 screen-service = "services.screen.screen:main"
 
