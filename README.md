@@ -24,6 +24,7 @@
 * Recipe suggestions based on available ingredients
 
 ## Dependencies
+* [pipx](https://github.com/pypa/pipx)
 * [poetry](https://python-poetry.org/)
 * [flask](https://flask.palletsprojects.com/en/stable/)
 * [flask-sqlalchemy](https://flask-sqlalchemy.readthedocs.io/en/stable/)
@@ -67,7 +68,7 @@
 ```
 git clone https://github.com/ghosthookcc/IOT-Smart-fridge-backend.git
 cd IOT-Smart-fridge-backend/smart-fridge
-pipx poetry
+pipx install poetry
 poetry install
 ```
 
