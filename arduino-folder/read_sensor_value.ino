@@ -42,10 +42,6 @@ void loop() {
   
   // Lägger till <SENSOR= i början och <END> vid slutet
   if (abs(sensor_Value1 - lastSentValue1) >= threshold1 || abs(sensor_Value2 - lastSentValue2) >= threshold2) {
-
-
-
-    
     String message = "<SENSOR=" + String(sensorName) + ">" + String(sensor_Value1) + " : " + String(sensor_Value2) + "<END>";
     udp.beginPacket(ip_to_raspberry, port_on_raspberry);
     udp.write(message.c_str());
@@ -53,7 +49,7 @@ void loop() {
 
     lastSentValue1 = sensor_Value1;
     lastSentValue2 = sensor_Value2;
-    Serial.println("Skickat: " + message);
+    Serial.println("Sent: " + message);
   }
   delay(1000);
 
