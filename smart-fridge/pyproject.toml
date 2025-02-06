@@ -13,11 +13,13 @@ dependencies = [
     "flask-sqlalchemy (>=3.1.1,<4.0.0)",
     "flask-restful (>=0.3.10,<0.4.0)",
     "importlib (>=1.0.4,<2.0.0)",
+    "jsonmerge (>=1.9.2,<2.0.0)",
 ]
 
 [tool.poetry]
 packages = [ {include = "services/restless", from = "src"},
-             {include = "services/screen", from = "src"} ]
+             {include = "services/screen", from = "src"},
+	     {include = "services/receiver", from = "src"} ]
 
 [tool.poetry.scripts]
 receiver-service = "services.receiver.receiver:main"
