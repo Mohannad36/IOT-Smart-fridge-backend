@@ -32,6 +32,7 @@
 * [pytest](https://docs.pytest.org/en/stable/)
 * [sqlite3](https://www.sqlite.org/)
 * [importlib](https://docs.python.org/3/library/importlib.html)
+* [jsonmerge](https://pypi.org/project/jsonmerge/)
 
 
 *** ***
