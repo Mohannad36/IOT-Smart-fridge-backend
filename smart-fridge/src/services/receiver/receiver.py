@@ -1,8 +1,15 @@
 import socket
 
+from workspace import *
+
 from queue import LifoQueue
 
 from threading import Thread
+
+from database.models import sqlite, User
+
+SENSORTAG: str = "SENSOR"
+TYPETAG: str = "TYPE"
 
 class Message:
     def __init__(self,
@@ -63,6 +70,9 @@ class ServerConnectionHandler(Thread):
                 
                 print(f"[/] Received Data :: {message.data} . . .")
                 for tag, value in message.headers.items():
+                    match tag:
+                        case SENSORTAG:
+                            pass
                     print(f"[/] Received Tag :: {tag} with a value of {value} . . .")
                 print("")
 
