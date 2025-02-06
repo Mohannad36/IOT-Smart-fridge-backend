@@ -1,7 +1,7 @@
 import os
 import json
 
-from workspace import workspace
+from workspace import *
 
 import importlib
 
@@ -15,8 +15,8 @@ from database.models import sqlite, User
 
 from collections.abc import Callable
 
-workspace["RestlessBasePath"] = os.path.abspath(os.path.dirname(__file__))
-workspace["RestlessRoutePath"] = os.path.abspath(os.path.join(workspace["RestlessBasePath"], "routing"))
+setConfigAttribute("RestlessBasePath", os.path.abspath(os.path.dirname(__file__)))
+setConfigAttribute("RestlessRoutePath", os.path.abspath(os.path.join(getConfigAttribute("RestlessBasePath"), "routing")))
 
 class restlessApiPlug:
     def __init__(self,
@@ -28,14 +28,14 @@ class restlessApiPlug:
         if self.application == None:
             self.application = Flask(__name__)
 
-        workspace["RestlessDatabasePath"] = os.path.abspath(os.path.join(os.path.join(workspace["RestlessBasePath"], databasePath), "data"))
-        workspace["RestlessDatabaseFilePath"] = "sqlite:///"+os.path.abspath(os.path.join(workspace["RestlessDatabasePath"], "db."+sqliteDatabaseName+".sqlite"))
-        workspace["RestlessEndpointsConfigPath"] = os.path.abspath(os.path.join(workspace["RestlessBasePath"], endpointsConfigPath))
+        setConfigAttribute("RestlessDatabasePath", os.path.abspath(os.path.join(os.path.join(getConfigAttribute("RestlessBasePath"), databasePath), "data")))
+        setConfigAttribute("RestlessDatabaseFilePath", "sqlite:///"+os.path.abspath(os.path.join(getConfigAttribute("RestlessDatabasePath"), "db."+sqliteDatabaseName+".sqlite")))
+        setConfigAttribute("RestlessEndpointsConfigPath", os.path.abspath(os.path.join(getConfigAttribute("RestlessBasePath"), endpointsConfigPath)))
 
-        if not os.path.exists(workspace["RestlessDatabasePath"]):
-            os.makedirs(workspace["RestlessDatabasePath"])
+        if not os.path.exists(getConfigAttribute("RestlessDatabasePath")):
+            os.makedirs(getConfigAttribute("RestlessDatabasePath"))
 
-        self.application.config["SQLALCHEMY_DATABASE_URI"] = workspace["RestlessDatabaseFilePath"]
+        self.application.config["SQLALCHEMY_DATABASE_URI"] = getConfigAttribute("RestlessDatabaseFilePath")
         self.application.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
         sqlite.init_app(self.application)
@@ -48,7 +48,7 @@ class restlessApiPlug:
         if (self.manager == None or action == None or endpoint == None): return
         self.manager.add_resource(action, endpoint)
     def dynamicLoadResources(self) -> None:
-        endpoints: dict = parseEndpoints(workspace["RestlessEndpointsConfigPath"])
+        endpoints: dict = parseEndpoints(getConfigAttribute("RestlessEndpointsConfigPath"))
         for endpointUrl, endpointAction in endpoints.items():
             if endpointAction == None: continue
             self.loadResource(endpointAction, endpointUrl)
