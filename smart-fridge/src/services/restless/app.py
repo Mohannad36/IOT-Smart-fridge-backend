@@ -11,7 +11,7 @@ from flask_restful import Api, Resource
 
 from modules.endpointParser import parseEndpoints
 
-from database.models import sqlite, User
+from database.models import db, Users
 
 from collections.abc import Callable
 
@@ -38,9 +38,9 @@ class restlessApiPlug:
         self.application.config["SQLALCHEMY_DATABASE_URI"] = getConfigAttribute("RestlessDatabaseFilePath")
         self.application.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
-        sqlite.init_app(self.application)
+        db.init_app(self.application)
         with self.application.app_context():
-            sqlite.create_all()
+            db.create_all()
         self.manager: Api = Api(self.application)
     def loadResource(self,
                     action: Callable, 
