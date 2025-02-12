@@ -91,9 +91,21 @@ cd IOT-Smart-fridge-backend/smart-fridge
 poetry run pytest
 ```
 
+
+*** ***
+
+
 ### Communication Architecture
 * **TCP** sockets for data transfer between ESP32 and Raspberry Pi
 * **REST**less for external integrations
 
 ![Described Topology Architecture](Diagram.png "Topology Architecture")
 ![Described Communication Architecture](IOT-Smart-fridge.drawio.png "Communication Architecture")
+
+
+*** ***
+
+
+### Database Structure
+![Database Structure](ERD-Smart-Fridge.png "Database Structure")
+
