@@ -27,8 +27,8 @@ class Items(db.Model):
     name = db.Column(db.String, nullable=False)
     quantity = db.Column(db.Float)
     expiration_date = db.Column(db.Date)
-    fridge_id = db.Column(db.Integer, db.ForeignKey('Fridges.fridge_guid'))
-    user_id = db.Column(db.Integer, db.ForeignKey('Users.user_id'))
+    fridge_guid = db.Column(db.Integer, db.ForeignKey('Fridges.fridge_guid'))
+    #user_id = db.Column(db.Integer, db.ForeignKey('Users.user_id'))
 
 class Sensors(db.Model):
     __tablename__ = 'Sensors'
@@ -36,7 +36,7 @@ class Sensors(db.Model):
     sensor_type = db.Column(db.String, nullable=False)
     value = db.Column(db.Float)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
-    fridge_id = db.Column(db.Integer, db.ForeignKey('Fridges.fridge_guid'))
+    fridge_guid = db.Column(db.Integer, db.ForeignKey('Fridges.fridge_guid'))
 
 class ShoppingLists(db.Model):
     __tablename__ = 'ShoppingLists'
@@ -45,9 +45,9 @@ class ShoppingLists(db.Model):
     created_date = db.Column(db.Date)
     user_id = db.Column(db.Integer, db.ForeignKey('Users.user_id'))
 
-class ListItems(db.Model):
-    __tablename__ = 'ListItems'
-    list_item_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    list_id = db.Column(db.Integer, db.ForeignKey('ShoppingLists.list_id'))
-    item_id = db.Column(db.Integer, db.ForeignKey('Items.item_id'))
-    quantity = db.Column(db.Float)
+#class ListItems(db.Model):
+#    __tablename__ = 'ListItems'
+#    list_item_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+#    list_id = db.Column(db.Integer, db.ForeignKey('ShoppingLists.list_id'))
+#    item_id = db.Column(db.Integer, db.ForeignKey('Items.item_id'))
+#    quantity = db.Column(db.Float)
