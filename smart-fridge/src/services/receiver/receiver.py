@@ -6,7 +6,10 @@ from queue import LifoQueue
 
 from threading import Thread
 
-from database.models import sqlite, User
+from database.models import db, Users
+from sqlalchemy import insert
+
+from modules.utils import guid
 
 SENSORTAG: str = "SENSOR"
 TYPETAG: str = "TYPE"
@@ -62,7 +65,6 @@ class ServerConnectionHandler(Thread):
                     newMessage: Message = Message(bufferData)
                     self.inData.put(newMessage)
 
-
     def interpretData(self):
         while True:
             if not self.inData.empty():
@@ -109,6 +111,7 @@ class ServerSocket:
         self.receiver.listen(maxConnections)
 
         print(f"[+] Server bound to {self.host}:{self.port} . . .")
+        print(f"[+] Server device GUID is {guid()} . . .")
         while True:
             self.handleNewConnection()
 
