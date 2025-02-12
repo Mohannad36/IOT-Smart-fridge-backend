@@ -1,52 +1,55 @@
-CREATE TABLE Users (
+CREATE TABLE IF NOT EXISTS Users (
     user_id INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT NOT NULL,
-    preferences TEXT
+    pincode DOUBLE NOT NULL,
 );
 
-CREATE TABLE Fridges (
-    fridge_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    location TEXT,
-    model TEXT,
-    user_id INTEGER,
+CREATE TABLE IF NOT EXISTS Fridges (
+    fridge_guid TEXT PRIMARY KEY,
+    model JSON NOT NULL,
+);
+
+CREATE TABLE IF NOT EXISTS Connections (
+    connection_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    fridge_guid TEXT NOT NULL,
+    user_id INTEGER NOT NULL,
+
+    FOREIGN KEY (fridge_guid) REFERENCES Fridges(fridge_guid),
     FOREIGN KEY (user_id) REFERENCES Users(user_id)
 );
 
-CREATE TABLE Items (
+CREATE TABLE IF NOT EXISTS Items (
     item_id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
-    quantity REAL,
+    quantity UNSIGNED REAL CHECK(quantity > 0),
     expiration_date DATE,
-    fridge_id INTEGER,
+
+    fridge_guid TEXT NOT NULL,
+    list_id INTEGER DEFAULT NULL,
     user_id INTEGER,
-    weight_sensor_id INTEGER,
-    FOREIGN KEY (user_id) REFERENCES Users(user_id),
-    FOREIGN KEY (fridge_id) REFERENCES Fridges(fridge_id),
-    FOREIGN KEY (weight_sensor_id) REFERENCES Sensors(sensor_id)
+
+    FOREIGN KEY (fridge_guid) REFERENCES Fridges(fridge_guid),
+    FOREIGN KEY (list_id) REFERENCES ShoppingLists(list_id)
 );
 
-CREATE TABLE Sensors (
+CREATE TABLE IF NOT EXISTS Sensors (
     sensor_id INTEGER PRIMARY KEY AUTOINCREMENT,
     sensor_type TEXT NOT NULL,
     value REAL,
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    fridge_id INTEGER,
-    FOREIGN KEY (fridge_id) REFERENCES Fridges(fridge_id)
+    fridge_guid TEXT NOT NULL,
+
+    FOREIGN KEY (fridge_guid) REFERENCES Fridges(fridge_guid)
 );
 
-CREATE TABLE ShoppingLists (
+CREATE TABLE IF NOT EXISTS ShoppingLists (
     list_id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
     created_date DATE,
-    user_id INTEGER,
-    FOREIGN KEY (user_id) REFERENCES Users(user_id)
-);
 
-CREATE TABLE ListItems (
-    list_item_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    list_id INTEGER,
-    item_id INTEGER,
-    quantity REAL,
-    FOREIGN KEY (list_id) REFERENCES ShoppingLists(list_id),
-    FOREIGN KEY (item_id) REFERENCES Items(item_id)
+    fridge_guid TEXT NOT NULL,
+    user_id INTEGER NOT NULL,
+
+    FOREIGN KEY (fridge_guid) REFERENCES Items(fridge_guid),
+    FOREIGN KEY (user_id) REFERENCES Users(user_id)
 );
