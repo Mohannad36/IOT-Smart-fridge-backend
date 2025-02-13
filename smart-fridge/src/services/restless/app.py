@@ -10,6 +10,7 @@ from flask_restful import Api, Resource
 from waitress import serve
 
 from modules.endpointParser import parseEndpoints
+from modules.logging import logger
 
 from database.models import db, Fridges 
 
@@ -17,6 +18,8 @@ from collections.abc import Callable
 
 setConfigAttribute("RestlessBasePath", os.path.abspath(os.path.dirname(__file__)))
 setConfigAttribute("RestlessRoutePath", os.path.abspath(os.path.join(getConfigAttribute("RestlessBasePath"), "routing")))
+
+log: logger = logger("restless-service.log", "INFO")
 
 class restlessApiPlug:
     def __init__(self,
@@ -55,16 +58,17 @@ class restlessApiPlug:
     def start(self,
               shouldShowDebugInformation = True) -> None:
         if (self.application == None): return
-
         serve(self.application, host="0.0.0.0", port=5000)
 
 def main() -> None:
+    log.info("Started")
     restlessApi: restlessApiPlug = restlessApiPlug(".",
                                                    "routing/endpoints.json", 
                                                    "persistent",
                                                    True, None)
     restlessApi.dynamicLoadResources()
     restlessApi.start(True)
+    log.info("Finished")
 
 if __name__ == "__main__":
     main()
