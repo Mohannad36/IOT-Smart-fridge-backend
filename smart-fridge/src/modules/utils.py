@@ -18,7 +18,8 @@ def runSubprocess(prompt: str) -> any:
 
 def runSubprocessControlled(args: list, path: str = ".") -> any:
     try:
-        return subprocess.Popen(args, shell=True,
+        return subprocess.Popen(args, 
+                                stdout=subprocess.PIPE, stdin=subprocess.PIPE,
                                 cwd=path,
                                 close_fds=True)
     except:
