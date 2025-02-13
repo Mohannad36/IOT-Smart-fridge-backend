@@ -7,6 +7,8 @@ from workspace import workspace
 
 from websockets.asyncio.server import serve
 
+from modules.logging import logger
+
 from sqlalchemy.orm import Session
 from sqlalchemy import select
 from sqlalchemy import func
@@ -17,7 +19,9 @@ from functools import partial
 
 sqlEngine = sqlalchemy.create_engine(workspace.getConfigAttribute("RestlessDatabaseFilePath"))
 
-CONNECTIONS = {}
+connections = {}
+
+log: logger = logger("websocket-proxy-service.log", "INFO")
 
 async def sendToReverseProxy(message, reader, writer):
     writer.write(message.encode())
@@ -41,15 +45,20 @@ async def proxyServer(websocket, reader, writer):
             return
 
         response = await sendToReverseProxy(event["data"], reader, writer)
-        print(f"Data received :: {event['data']} . . .")
+
+        print(f"[/] Data received :: {event['data']} . . .")
+        log.info(f"Data received :: {event['data']} . . .")
 
         if len(response) > 0:
             await websocket.send(response)
+            log.info(f"Response sent back :: {response} . . .")
 
 async def main() -> None:
+    log.info("Started")
     proxyReader, proxyWriter = await asyncio.open_connection("192.168.1.92", 12444)
     async with serve(partial(proxyServer, reader=proxyReader, writer=proxyWriter), "localhost", 13000):
         await asyncio.get_running_loop().create_future()
+    log.info("Finished")
 
 def runMain():
     asyncio.run(main())
