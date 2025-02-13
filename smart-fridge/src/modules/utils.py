@@ -1,6 +1,7 @@
 import importlib
 import subprocess
 import sys
+import os
 
 def stringToClassUsingModule(classNameAsString: str, module: str) -> object:
     if (classNameAsString == None or module == None): return None
@@ -14,6 +15,15 @@ def runSubprocess(prompt: str) -> any:
                      .strip()
   except:
     return None
+
+def runSubprocessControlled(args: list, path: str = ".") -> any:
+    try:
+        return subprocess.Popen(args, shell=True,
+                                cwd=path,
+                                close_fds=True)
+    except:
+        return None
+
 
 def guid() -> str:
   if sys.platform == 'darwin':
