@@ -15,12 +15,13 @@ dependencies = [
     "importlib (>=1.0.4,<2.0.0)",
     "jsonmerge (>=1.9.2,<2.0.0)",
     "psutil (>=6.1.1,<7.0.0)",
+    "waitress (>=3.0.2,<4.0.0)",
 ]
 
 [tool.poetry]
 packages = [ {include = "services/restless", from = "src"},
              {include = "services/screen", from = "src"},
-	         {include = "services/receiver", from = "src"},
+	     {include = "services/receiver", from = "src"},
 
              {include = "modules", from = "src"},
 
