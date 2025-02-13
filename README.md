@@ -81,12 +81,13 @@ poetry install
 cd IOT-Smart-fridge-backend/smart-fridge
 ```
 
-| Command                       | Action                                      |
-| :---------------------------  | :------------------------------------------ |
-| `poetry run restless-service` | Starts the restless api                     |
-| `poetry run screen-service`   | Starts the screen manager                   |
-| `poetry run receiver-service` | Starts the data receiver                    |
-| `poetry run all`              | Start all services managed by the workspace |
+| Command                       | Action                                                |
+| :---------------------------  | :-----------------------------------------------------|
+| `poetry run restless-service` | Starts the restless api                               |
+| `poetry run screen-service`   | Starts the screen manager                             |
+| `poetry run receiver-service` | Starts the data receiver                              |
+| `poetry run proxy-service`    | Starts the reverse proxy service for receiver-service |
+| `poetry run all`              | Start all services managed by the workspace           |
 
 ### How to run tests
 ```
