@@ -3,11 +3,11 @@ import json
 
 from workspace import *
 
-import importlib
-
 from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Api, Resource
+
+from waitress import serve
 
 from modules.endpointParser import parseEndpoints
 
@@ -55,9 +55,10 @@ class restlessApiPlug:
     def start(self,
               shouldShowDebugInformation = True) -> None:
         if (self.application == None): return
-        self.application.run(debug=shouldShowDebugInformation)
 
-def main() -> None: 
+        serve(self.application, host="0.0.0.0", port=5000)
+
+def main() -> None:
     restlessApi: restlessApiPlug = restlessApiPlug(".",
                                                    "routing/endpoints.json", 
                                                    "persistent",
