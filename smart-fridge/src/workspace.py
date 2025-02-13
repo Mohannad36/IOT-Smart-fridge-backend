@@ -8,6 +8,7 @@ from jsonmerge import merge
 
 from modules.utils import guid
 from modules.cache import *
+from modules.logging import *
 
 class Workspace:
     config = { "BasePath" : os.path.dirname(os.path.abspath(__file__)) }
@@ -49,7 +50,9 @@ def main() -> None:
     if not os.path.exists(".env"):
         newEnvironmentFile = open(".env", "w+") 
     setConfigAttribute("GUID", guid())
+
     setupCaching()
+    setupLogging()
 
     restlessServiceProcess: any = None
     receiverServiceProcess: any = None
