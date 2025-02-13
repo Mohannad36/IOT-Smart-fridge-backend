@@ -2,6 +2,8 @@ import socket
 
 from workspace import *
 
+from modules.logging import logger
+
 from queue import LifoQueue
 
 from threading import Thread
@@ -11,6 +13,8 @@ from sqlalchemy import insert
 
 SENSORTAG: str = "SENSOR"
 TYPETAG: str = "TYPE"
+
+log: logger = logger("receiver-service.log", "INFO")
 
 class Message:
     def __init__(self,
@@ -54,6 +58,9 @@ class ServerConnectionHandler(Thread):
     def receive(self):
         data: str = self.connection.recv(self.maxReadPerPacketInBytes)
         if data:
+            print(f"[/] Incoming RAW data :: {data} . . .")
+            log.info(f"Incoming RAW data :: {data} . . .")
+            
             buffer: str = ""
             buffer += data.decode()
             while not buffer.endswith("<END>"):
@@ -69,11 +76,13 @@ class ServerConnectionHandler(Thread):
                 message = self.inData.get()
                 
                 print(f"[/] Received Data :: {message.data} . . .")
+                log.info(f"Received data :: {message.data} . . .")
                 for tag, value in message.headers.items():
                     match tag:
                         case SENSORTAG:
                             pass
                     print(f"[/] Received Tag :: {tag} with a value of {value} . . .")
+                    log.info(f"Received Tag :: {tag} with a value of {value} . . .")
                 print("")
 
                 self.inData.task_done()
@@ -98,6 +107,7 @@ class ServerSocket:
         clientSocket, address = self.receiver.accept()
         
         print(f"[+] Received new connection on {address} . . .\n")
+        log.info(f"Received new connection on {address} . . .")
 
         receiver: ServerConnectionHandler = ServerConnectionHandler(clientSocket, address)
         self.clients.append(receiver)
@@ -109,7 +119,11 @@ class ServerSocket:
         self.receiver.listen(maxConnections)
 
         print(f"[+] Server bound to {self.host}:{self.port} . . .")
+        log.info(f"Server bound to {self.host}:{self.port} . . .")
+        
         print(f"[+] Server device GUID is {guid()} . . .")
+        log.info(f"Server device GUID is {guid()} . . .")
+
         while True:
             self.handleNewConnection()
 
