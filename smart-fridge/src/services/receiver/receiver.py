@@ -9,8 +9,6 @@ from threading import Thread
 from database.models import db, Users
 from sqlalchemy import insert
 
-from modules.utils import guid
-
 SENSORTAG: str = "SENSOR"
 TYPETAG: str = "TYPE"
 
