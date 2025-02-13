@@ -14,17 +14,23 @@ dependencies = [
     "flask-restful (>=0.3.10,<0.4.0)",
     "importlib (>=1.0.4,<2.0.0)",
     "jsonmerge (>=1.9.2,<2.0.0)",
+    "psutil (>=6.1.1,<7.0.0)",
 ]
 
 [tool.poetry]
 packages = [ {include = "services/restless", from = "src"},
              {include = "services/screen", from = "src"},
-	     {include = "services/receiver", from = "src"} ]
+	         {include = "services/receiver", from = "src"},
+
+             {include = "modules", from = "src"},
+
+             {include = "src" } ]
 
 [tool.poetry.scripts]
 receiver-service = "services.receiver.receiver:main"
 restless-service = "services.restless.app:main"
 screen-service = "services.screen.screen:main"
+release = "workspace:main"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
