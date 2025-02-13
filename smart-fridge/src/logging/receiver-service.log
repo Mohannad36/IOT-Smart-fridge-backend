@@ -1,0 +1,13 @@
+INFO:modules.logging:Server bound to 0.0.0.0:12444 . . .
+INFO:modules.logging:Server device GUID is c07e678d85794469907d03bc0fd4d667 . . .
+INFO:modules.logging:Received new connection on ('127.0.0.1', 42018) . . .
+INFO:modules.logging:Received new connection on ('127.0.0.1', 43462) . . .
+INFO:modules.logging:Received new connection on ('127.0.0.1', 43478) . . .
+INFO:modules.logging:Server bound to 0.0.0.0:12444 . . .
+INFO:modules.logging:Server device GUID is c07e678d85794469907d03bc0fd4d667 . . .
+INFO:modules.logging:Received new connection on ('127.0.0.1', 33868) . . .
+INFO:modules.logging:Incoming RAW data :: b'GET / HTTP/1.1\r\nHost: localhost:12444\r\nUser-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:134.0) Gecko/20100101 Firefox/134.0\r\nAccept: */*\r\nAccept-Language: en-US,en;q=0.5\r\nAccept-Encoding: gzip, deflate, br, zstd\r\nSec-WebSocket-Version: 13\r\nOrigin: null\r\nSec-WebSocket-Extensions: permessage-deflate\r\nSec-WebSocket-Key: QUL7Hn33Lo9Y2jsJLT7Dxw==\r\nConnection: keep-alive, Upgrade\r\nSec-Fetch-Dest: empty\r\nSec-Fetch-Mode: websocket\r\nSec-Fetch-Site: cross-site\r\nPragma: no-cache\r\nCache-Control: no-cache\r\nUpgrade: websocket\r\n\r\n' . . .
+INFO:modules.logging:Server bound to 0.0.0.0:12444 . . .
+INFO:modules.logging:Server device GUID is c07e678d85794469907d03bc0fd4d667 . . .
+INFO:modules.logging:Received new connection on ('127.0.0.1', 39652) . . .
+INFO:modules.logging:Incoming RAW data :: b'GET / HTTP/1.1\r\nHost: localhost:12444\r\nUser-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:134.0) Gecko/20100101 Firefox/134.0\r\nAccept: */*\r\nAccept-Language: en-US,en;q=0.5\r\nAccept-Encoding: gzip, deflate, br, zstd\r\nSec-WebSocket-Version: 13\r\nOrigin: null\r\nSec-WebSocket-Extensions: permessage-deflate\r\nSec-WebSocket-Key: mNKHIHzJ7dws9vPQ4ih6Ww==\r\nConnection: keep-alive, Upgrade\r\nSec-Fetch-Dest: empty\r\nSec-Fetch-Mode: websocket\r\nSec-Fetch-Site: cross-site\r\nPragma: no-cache\r\nCache-Control: no-cache\r\nUpgrade: websocket\r\n\r\n' . . .
