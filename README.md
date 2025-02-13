@@ -32,9 +32,10 @@
 * [pytest](https://docs.pytest.org/en/stable/)
 * [sqlite3](https://www.sqlite.org/)
 * [importlib](https://docs.python.org/3/library/importlib.html)
-* [jsonmerge](https://pypi.org/project/jsonmerge/)
 * [psutil](https://pypi.org/project/psutil/)
 * [waitress](https://pypi.org/project/waitress/)
+* [websockets](https://websockets.readthedocs.io/en/stable/index.html)
+* [python-dotenv](https://pypi.org/project/python-dotenv/)
 
 
 *** ***
