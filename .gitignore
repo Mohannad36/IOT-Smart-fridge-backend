@@ -1,6 +1,6 @@
 __pycache__
+*.log
 db.**.sqlite
 data/
 .env
 .cache
-logging/*
