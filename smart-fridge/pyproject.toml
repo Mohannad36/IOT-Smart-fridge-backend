@@ -31,7 +31,7 @@ packages = [ {include = "services/restless", from = "src"},
 receiver-service = "services.receiver.receiver:main"
 restless-service = "services.restless.app:main"
 screen-service = "services.screen.screen:main"
-release = "workspace:main"
+all = "workspace:main"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
