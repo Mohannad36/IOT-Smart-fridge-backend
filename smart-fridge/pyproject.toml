@@ -16,6 +16,9 @@ dependencies = [
     "jsonmerge (>=1.9.2,<2.0.0)",
     "psutil (>=6.1.1,<7.0.0)",
     "waitress (>=3.0.2,<4.0.0)",
+    "websockets (>=14.2,<15.0)",
+    "portalocker (>=3.1.1,<4.0.0)",
+    "python-dotenv (>=1.0.1,<2.0.0)",
 ]
 
 [tool.poetry]
@@ -31,6 +34,7 @@ packages = [ {include = "services/restless", from = "src"},
 receiver-service = "services.receiver.receiver:main"
 restless-service = "services.restless.app:main"
 screen-service = "services.screen.screen:main"
+proxy-service  = "services.websocket-proxy.proxy:runMain"
 all = "workspace:main"
 
 [build-system]
