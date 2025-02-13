@@ -11,7 +11,7 @@ from flask_restful import Api, Resource
 
 from modules.endpointParser import parseEndpoints
 
-from database.models import db, Users
+from database.models import db, Fridges 
 
 from collections.abc import Callable
 
