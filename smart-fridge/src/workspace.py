@@ -1,54 +1,33 @@
 import os
 import json
+import time
+
 import psutil
 import shlex
 import signal
 
-from jsonmerge import merge
+from dotenv import set_key, load_dotenv
 
 from modules.utils import guid
 from modules.cache import *
 from modules.logging import *
 
-class Workspace:
-    config = { "BasePath" : os.path.dirname(os.path.abspath(__file__)) }
-    def __getitem__(self, indice):
-        pass
-    def __setitem__(self, indice, data):
-        pass
-    def __str__(self):
-        stringRepresentation = ""
-        for key, value in self.config.items():
-            stringRepresentation += "(" + key + "::" + value + ") "
-        return stringRepresentation
+set_key(".env", "BasePath", os.path.dirname(os.path.abspath(__file__)))
 
 def getConfigAttribute(attribute):
     if not os.path.exists(".env"):
         newEnvironmentFile = open(".env", "w+")
         newEnvironmentFile.close()
-    if os.path.getsize(".env") > 0:
-        with open (".env", "r") as paths:
-            Workspace.config = json.load(paths)
-    return Workspace.config[attribute]
+    load_dotenv(".env")
+    return os.getenv(attribute)
 
 def setConfigAttribute(attribute, value):
     if not os.path.exists(".env"):
         newEnvironmentFile = open(".env", "w+")
         newEnvironmentFile.close()
-
-    Workspace.config[attribute] = value
-    currentJsonConfig: str = None
-    newPathsAsJson: str = json.dumps(Workspace.config)
-
-    if os.path.getsize(".env") > 0:
-        with open (".env", "r") as paths:
-            currentJsonConfig = json.load(paths)
-    with open (".env", "w+") as paths:
-        paths.write(merge(currentJsonConfig, newPathsAsJson))
+    set_key(".env", attribute, value)
 
 def main() -> None:
-    if not os.path.exists(".env"):
-        newEnvironmentFile = open(".env", "w+") 
     setConfigAttribute("GUID", guid())
 
     setupCaching()
@@ -57,6 +36,7 @@ def main() -> None:
     restlessServiceProcess: any = None
     receiverServiceProcess: any = None
     screenServiceProcess: any = None
+    proxyServiceProcess: any = None
 
     savedServicePidLines: list = []
 
@@ -73,27 +53,41 @@ def main() -> None:
                     match serviceName:
                         case "restless":
                             restlessServiceProcess = psutil.Process(pid)
-                            print("NO START RESTLESS")
+                            print("[/] RESTLESS SERVICE ALREADY RUNNING . . .")
                         case "receiver":
                             receiverServiceProcess = psutil.Process(pid)
-                            print("NO START RECEIVER")
+                            print("[/] RECEIVER SERVICE ALREADY RUNNING . . .")
                         case "screen":
                             screenServiceProcess = psutil.Process(pid)
-                            print("NO START SCREEN")
+                            print("[/] SCREEN SERVICE ALREADY RUNNING . . .")
+                        case "proxy":
+                            proxyServiceProcess = psutil.Process(pid)
+                            print("[/] PROXY SERVICE ALREADY RUNNING . . .")
                     savedServicePidLines.append(servicePidLine)
     with open(getConfigAttribute("cacheFilePath"), "w+") as cache:
         if not restlessServiceProcess:
             restlessServiceProcess = runSubprocessControlledCached(shlex.split("poetry run restless-service"))
-            print("START RESTLESS")
+            print("[+] STARTING RESTLESS SERVICE . . .")
             cache.write(f"restless:{restlessServiceProcess.pid}\n")
+        time.sleep(2)
+
         if not receiverServiceProcess:
             receiverServiceProcess = runSubprocessControlledCached(shlex.split("poetry run receiver-service"))
-            print("START RECEIVER")
+            print("[+] STARTING RECEIVER SERVICE . . .")
             cache.write(f"receiver:{receiverServiceProcess.pid}\n")
+        time.sleep(2)
+
         if not screenServiceProcess:
             screenServiceProcess = runSubprocessControlledCached(shlex.split("poetry run screen-service"))
-            print("START SCREEN")
+            print("[+] STARTING SCREEN SERVICE . . .")
             cache.write(f"screen:{screenServiceProcess.pid}\n")
+        time.sleep(2)
+
+        if not proxyServiceProcess:
+            proxyServiceProcess = runSubprocessControlledCached(shlex.split("poetry run proxy-service"))
+            print("[+] STARTING PROXY SERVICE . . .")
+            cache.write(f"proxy:{proxyServiceProcess.pid}\n")
+
         for savedServicePidLine in savedServicePidLines:
             cache.write(savedServicePidLine+"\n")
 
