@@ -5,14 +5,16 @@ from workspace import *
 from modules.logging import logger
 
 from queue import LifoQueue
+from enum import Enum
 
 from threading import Thread
 
 from database.models import db, Users
 from sqlalchemy import insert
 
-SENSORTAG: str = "SENSOR"
-TYPETAG: str = "TYPE"
+class Tag(str, Enum):
+    SENSOR = "SENSOR"
+    TYPE = "TYPE"
 
 log: logger = logger("receiver-service.log", "INFO")
 
@@ -60,7 +62,7 @@ class ServerConnectionHandler(Thread):
         if data:
             print(f"[/] Incoming RAW data :: {data} . . .")
             log.info(f"Incoming RAW data :: {data} . . .")
-            
+
             buffer: str = ""
             buffer += data.decode()
             while not buffer.endswith("<END>"):
@@ -74,27 +76,30 @@ class ServerConnectionHandler(Thread):
         while True:
             if not self.inData.empty():
                 message = self.inData.get()
-                
+
                 print(f"[/] Received Data :: {message.data} . . .")
                 log.info(f"Received data :: {message.data} . . .")
                 for tag, value in message.headers.items():
                     match tag:
-                        case SENSORTAG:
+                        case Tag.SENSOR:
                             pass
+                        case Tag.TYPE:
+                            if value == "ping":
+                                self.connection.send("pong".encode())
+
                     print(f"[/] Received Tag :: {tag} with a value of {value} . . .")
                     log.info(f"Received Tag :: {tag} with a value of {value} . . .")
                 print("")
 
                 self.inData.task_done()
-            
-        
+
 class ServerSocket:
     def __init__(self, 
                  host: str = "0.0.0.0", port: int = 12444,
                  localHost: str = "127.0.0.1", localPort: int = 12445) -> None:
         self.receiver = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.receiver.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        
+
         self.host = host
         self.port = port
 
@@ -105,7 +110,7 @@ class ServerSocket:
 
     def handleNewConnection(self) -> None:
         clientSocket, address = self.receiver.accept()
-        
+
         print(f"[+] Received new connection on {address} . . .\n")
         log.info(f"Received new connection on {address} . . .")
 
@@ -120,7 +125,7 @@ class ServerSocket:
 
         print(f"[+] Server bound to {self.host}:{self.port} . . .")
         log.info(f"Server bound to {self.host}:{self.port} . . .")
-        
+
         print(f"[+] Server device GUID is {guid()} . . .")
         log.info(f"Server device GUID is {guid()} . . .")
 
