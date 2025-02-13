@@ -3,4 +3,4 @@ db.**.sqlite
 data/
 .env
 .cache
-logging/**
+logging/*
