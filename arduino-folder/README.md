@@ -5,10 +5,9 @@
 2. Go to **File > Preferences**.
 3. In "Additional Boards Manager URLs" field, add this URL:
 
-'''
-
+```
 https://arduino.esp8266.com/stable/package_esp8266com_index.json 
-'''
+```
 
 
 ### 2. Install Required Libraries
