@@ -1,6 +1,7 @@
 import os
 import json
 import psutil
+import shlex
 import signal
 
 from jsonmerge import merge
@@ -79,15 +80,15 @@ def main() -> None:
                     savedServicePidLines.append(servicePidLine)
     with open(getConfigAttribute("cacheFilePath"), "w+") as cache:
         if not restlessServiceProcess:
-            restlessServiceProcess = runSubprocessControlledCached(["poetry", "run", "restless-service"])
+            restlessServiceProcess = runSubprocessControlledCached(shlex.split("poetry run restless-service"))
             print("START RESTLESS")
             cache.write(f"restless:{restlessServiceProcess.pid}\n")
         if not receiverServiceProcess:
-            receiverServiceProcess = runSubprocessControlledCached(["poetry", "run", "receiver-service"])
+            receiverServiceProcess = runSubprocessControlledCached(shlex.split("poetry run receiver-service"))
             print("START RECEIVER")
             cache.write(f"receiver:{receiverServiceProcess.pid}\n")
         if not screenServiceProcess:
-            screenServiceProcess = runSubprocessControlledCached(["poetry", "run", "screen-service"])
+            screenServiceProcess = runSubprocessControlledCached(shlex.split("poetry run screen-service"))
             print("START SCREEN")
             cache.write(f"screen:{screenServiceProcess.pid}\n")
         for savedServicePidLine in savedServicePidLines:
