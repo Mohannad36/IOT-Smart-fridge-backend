@@ -14,7 +14,9 @@ class logger:
                 self.level = logging.INFO
             case _:
                 self.level = logging.INFO 
-        self.logConfig = logging.basicConfig(filename=os.path.abspath(os.path.join(os.path.join(workspace.getConfigAttribute("BasePath"), "logging"), logName)), level=self.level)
+        self.logPath = os.path.abspath(os.path.join(os.path.join(workspace.getConfigAttribute("BasePath"), "logging"), logName))
+        self.logConfig = logging.basicConfig(filename=self.logPath, level=self.level)
+        self.logHandler = logging.FileHandler(self.logPath, mode="w", encoding=None, delay=False)
 
     def info(self,
              logMessage: str) -> None:
