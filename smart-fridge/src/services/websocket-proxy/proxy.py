@@ -46,7 +46,6 @@ async def proxyServer(websocket, reader, writer):
 
         response = await sendToReverseProxy(event["data"], reader, writer)
 
-        print(f"[/] Data received :: {event['data']} . . .")
         log.info(f"Data received :: {event['data']} . . .")
 
         if len(response) > 0:

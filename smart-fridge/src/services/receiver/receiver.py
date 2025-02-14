@@ -60,7 +60,6 @@ class ServerConnectionHandler(Thread):
     def receive(self):
         data: str = self.connection.recv(self.maxReadPerPacketInBytes)
         if data:
-            print(f"[/] Incoming RAW data :: {data} . . .")
             log.info(f"Incoming RAW data :: {data} . . .")
 
             buffer: str = ""
@@ -77,7 +76,6 @@ class ServerConnectionHandler(Thread):
             if not self.inData.empty():
                 message = self.inData.get()
 
-                print(f"[/] Received Data :: {message.data} . . .")
                 log.info(f"Received data :: {message.data} . . .")
                 for tag, value in message.headers.items():
                     match tag:
@@ -86,11 +84,7 @@ class ServerConnectionHandler(Thread):
                         case Tag.TYPE:
                             if value == "ping":
                                 self.connection.send("pong".encode())
-
-                    print(f"[/] Received Tag :: {tag} with a value of {value} . . .")
                     log.info(f"Received Tag :: {tag} with a value of {value} . . .")
-                print("")
-
                 self.inData.task_done()
 
 class ServerSocket:
@@ -111,7 +105,6 @@ class ServerSocket:
     def handleNewConnection(self) -> None:
         clientSocket, address = self.receiver.accept()
 
-        print(f"[+] Received new connection on {address} . . .\n")
         log.info(f"Received new connection on {address} . . .")
 
         receiver: ServerConnectionHandler = ServerConnectionHandler(clientSocket, address)
@@ -123,10 +116,7 @@ class ServerSocket:
         self.receiver.bind((self.host, self.port))
         self.receiver.listen(maxConnections)
 
-        print(f"[+] Server bound to {self.host}:{self.port} . . .")
         log.info(f"Server bound to {self.host}:{self.port} . . .")
-
-        print(f"[+] Server device GUID is {guid()} . . .")
         log.info(f"Server device GUID is {guid()} . . .")
 
         while True:
