@@ -54,7 +54,7 @@ async def proxyServer(websocket, reader, writer):
 
 async def main() -> None:
     log.info("Started")
-    proxyReader, proxyWriter = await asyncio.open_connection("<YOUR_IP>", 12444)
+    proxyReader, proxyWriter = await asyncio.open_connection("127.0.0.1", 12444)
     async with serve(partial(proxyServer, reader=proxyReader, writer=proxyWriter), "localhost", 13000):
         await asyncio.get_running_loop().create_future()
     log.info("Finished")
