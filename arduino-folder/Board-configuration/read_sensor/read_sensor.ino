@@ -4,8 +4,8 @@
 #define DHTTYPE DHT11
 DHT dht(DHTPIN, DHTTYPE);
 
-const char* ssid = "JENSEN-Guest";
-const char* password = "Hopper2024";
+const char* ssid = "<WIFI_NAME>";
+const char* password = "<PASSWORD>";
 const char* ip_to_raspberry = "10.48.80.101"; 
 const int port_on_raspberry = 12444;
 const char* sensorName = "TemperatureAndHumiditySensor";
