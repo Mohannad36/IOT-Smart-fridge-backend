@@ -10,6 +10,7 @@ class Users(db.Model):
     user_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String, nullable=False)
     pincode = db.Column(db.Double, nullable=False)
+    active = db.Column(db.Boolean, nullable=False, default=False)
 
 class Fridges(db.Model):
     __tablename__ = 'Fridges'
