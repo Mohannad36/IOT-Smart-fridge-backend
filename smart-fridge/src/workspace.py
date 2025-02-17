@@ -14,25 +14,7 @@ from modules.logging import *
 
 set_key(".env", "BasePath", os.path.dirname(os.path.abspath(__file__)))
 
-def getConfigAttribute(attribute):
-    if not os.path.exists(".env"):
-        newEnvironmentFile = open(".env", "w+")
-        newEnvironmentFile.close()
-    load_dotenv(".env")
-    return os.getenv(attribute)
-
-def setConfigAttribute(attribute, value):
-    if not os.path.exists(".env"):
-        newEnvironmentFile = open(".env", "w+")
-        newEnvironmentFile.close()
-    set_key(".env", attribute, value)
-
-def main() -> None:
-    setConfigAttribute("GUID", guid())
-
-    setupCaching()
-    setupLogging()
-
+def identifyRunningServices() -> None:
     restlessServiceProcess: any = None
     receiverServiceProcess: any = None
     screenServiceProcess: any = None
@@ -91,6 +73,28 @@ def main() -> None:
         for savedServicePidLine in savedServicePidLines:
             cache.write(savedServicePidLine+"\n")
 
+def getConfigAttribute(attribute):
+    if not os.path.exists(".env"):
+        newEnvironmentFile = open(".env", "w+")
+        newEnvironmentFile.close()
+    load_dotenv(".env")
+    return os.getenv(attribute)
+
+def setConfigAttribute(attribute, value):
+    if not os.path.exists(".env"):
+        newEnvironmentFile = open(".env", "w+")
+        newEnvironmentFile.close()
+    set_key(".env", attribute, value)
+
+def main() -> None:
+    setConfigAttribute("GUID", guid())
+
+    setupCaching()
+    setupLogging()
+
+    while True:
+        identifyRunningServices()
+        time.sleep(30)
 
 if __name__ == "__main__":
     main()
