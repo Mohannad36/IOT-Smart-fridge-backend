@@ -24,8 +24,8 @@ def parseEndpoints(endpointsConfigPath: str) -> dict:
 
                 baseRouteUrl = base["baseRoute"]
 
-                endpointUrl = baseUrl + baseRouteUrl
-                endpointAction = base["action"]
+                endpointUrl = baseRouteUrl
+                endpointAction = stringToClassUsingModule(base["action"], "services.restless.routing.routeActions")
 
                 constructEndpointKeyPair(outEndpoints, endpointUrl, endpointAction)
 
