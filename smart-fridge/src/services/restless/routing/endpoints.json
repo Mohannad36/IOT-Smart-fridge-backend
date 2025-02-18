@@ -7,19 +7,9 @@
         "baseRoute" : "/sensor/weight/",
         "action" : null,
         "subRoutes" : 
-        [
-          {
-            "getById" :
-            {
-                "action" : "GetWeightSensorById"
-            }
-          },
-          {
-            "getOccupiedById" : 
-            {
-                "action" : "IsWeightSensorOccupiedById"
-            }
-          }
+        [ 
+          { "getById" : { "action" : "GetWeightSensorById" } },
+          { "getOccupiedById" : { "action" : "IsWeightSensorOccupiedById" } }
         ]
       }
     },
@@ -30,19 +20,17 @@
         "action" : null,
         "subRoutes" : 
         [
-          {
-            "getById" : 
-            {
-                "action": null
-            }
-          },
-          {
-            "getAll" :
-            {
-                "action" : null
-            }
-          }
+          { "getById" : { "action": null } },
+          { "getAll" : { "action" : null } }
         ]
+      }
+    },
+    {
+      "Documentation/Swagger" :
+      {
+        "baseRoute" : "/swagger.json/",
+        "action" : "SwaggerJson",
+        "subRoutes" : []  
       }
     }
   ]
