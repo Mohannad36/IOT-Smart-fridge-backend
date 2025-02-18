@@ -142,7 +142,6 @@ class ServerSocket:
             self.removeDisconnectedClients()
             self.handleNewConnection()
 
-
 def main() -> None:
     server: ServerSocket = ServerSocket()
     server.start(5)
