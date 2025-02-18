@@ -7,6 +7,8 @@ from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Api, Resource
 
+from flask_swagger_ui import get_swaggerui_blueprint
+
 from waitress import serve
 
 from modules.endpointParser import parseEndpoints
@@ -41,6 +43,12 @@ class restlessApiPlug:
         self.application.config["SQLALCHEMY_DATABASE_URI"] = getConfigAttribute("RestlessDatabaseFilePath")
         self.application.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
+        self.swaggerUrl = "/documentation"
+        self.swaggerApiUrl = "/swagger.json"
+        swaggerBlueprint = get_swaggerui_blueprint(self.swaggerUrl, self.swaggerApiUrl, 
+                                                   config = { "app_name" : "Restless smart-fridge API" })
+        self.application.register_blueprint(swaggerBlueprint, url_prefix=self.swaggerUrl)
+
         db.init_app(self.application)
         with self.application.app_context():
             db.create_all()
@@ -59,6 +67,9 @@ class restlessApiPlug:
               shouldShowDebugInformation = True) -> None:
         if (self.application == None): return
         serve(self.application, host="0.0.0.0", port=5000)
+
+swaggerUrl: str = "/swagger"
+apiUrl: str = "/swagger.json"
 
 def main() -> None:
     log.info("Started")
