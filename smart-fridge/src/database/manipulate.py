@@ -12,7 +12,7 @@ from sqlalchemy.orm import Session
 
 from .models import db, Users
 
-valkeyUri: str = f"valkeys://default:{workspace.getConfigAttribute('VALKEYSSECRET')}@valkey-23c3b453-smart-fridge.b.aivencloud.com:12263"
+valkeyUri: str = f"valkeys://default:{workspace.getConfigAttribute('VALKEYSECRET')}@valkey-23c3b453-smart-fridge.b.aivencloud.com:12263"
 valkeyClient = valkey.from_url(valkeyUri) 
 
 def checkIfUserExists(engine, 
