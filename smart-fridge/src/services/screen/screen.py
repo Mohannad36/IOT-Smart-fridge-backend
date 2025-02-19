@@ -1,6 +1,6 @@
 import time
 
-from modules.logging import logger
+from modules.logger import logger
 
 log: logger = logger("screen-service.log", "INFO")
 

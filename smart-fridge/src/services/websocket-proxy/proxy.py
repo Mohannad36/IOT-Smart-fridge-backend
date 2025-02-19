@@ -9,13 +9,13 @@ from workspace import workspace
 
 from websockets.asyncio.server import serve
 
-from modules.logging import logger
+from modules.logger import logger
 
 from database.models import Users
 
 from functools import partial
 
-sqlEngine = sqlalchemy.create_engine(workspace.getConfigAttribute("RestlessDatabaseFilePath"))
+#sqlEngine = sqlalchemy.create_engine(workspace.getConfigAttribute("RestlessDatabaseFilePath"))
 
 connections = {}
 
@@ -33,8 +33,7 @@ async def proxyServer(websocket, reader, writer):
     async for message in websocket:
         event = json.loads(message)
 
-        userFound: bool = sql.checkIfUserExists(sqlEngine, 
-                                                event["username"], event["pincode"])
+        userFound: bool = sql.checkIfUserExists(username = event["username"], pincode = event["pincode"])
         if not userFound:
             await websocket.close()
             return

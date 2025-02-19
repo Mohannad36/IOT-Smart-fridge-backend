@@ -12,7 +12,7 @@ from flask_swagger_ui import get_swaggerui_blueprint
 from waitress import serve
 
 from modules.endpointParser import parseEndpoints
-from modules.logging import logger
+from modules.logger import logger
 
 from database.models import db, Fridges 
 

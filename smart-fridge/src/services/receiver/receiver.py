@@ -2,7 +2,7 @@ import socket
 
 from workspace import *
 
-from modules.logging import logger
+from modules.logger import logger
 
 from queue import LifoQueue
 from enum import Enum
