@@ -10,7 +10,7 @@ from dotenv import set_key, load_dotenv
 
 from modules.utils import guid
 from modules.cache import *
-from modules.logging import *
+from modules.logger import *
 
 set_key(".env", "BasePath", os.path.dirname(os.path.abspath(__file__)))
 
@@ -87,10 +87,14 @@ def setConfigAttribute(attribute, value):
     set_key(".env", attribute, value)
 
 def main() -> None:
+    import database.manipulate as sql
+
     setConfigAttribute("GUID", guid())
 
     setupCaching()
     setupLogging()
+
+    sql.insertNewFridgeIfNotExists()
 
     while True:
         identifyRunningServices()
