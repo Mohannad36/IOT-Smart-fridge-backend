@@ -26,6 +26,17 @@ class Connections(db.Model):
     fridge_guid = db.Column(db.String, db.ForeignKey('Fridges.fridge_guid'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('Users.user_id'), nullable=False)
 
+class Sensors(db.Model):
+    __tablename__ = "Sensors"
+
+    sensor_guid = db.Column(db.String, primary_key=True)
+    sensor_type = db.Column(db.String, nullable=False)
+
+    value = db.Column(db.Float)
+
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+    fridge_guid = db.Column(db.Integer, db.ForeignKey('Fridges.fridge_guid'))
+
 class Items(db.Model):
     __tablename__ = "Items"
     extend_exising = True
@@ -43,15 +54,6 @@ class Items(db.Model):
 
     def serialize(self):
         return { "id" : self.item_id, "name" : self.name }
-
-class Sensors(db.Model):
-    __tablename__ = "Sensors"
-
-    sensor_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    sensor_type = db.Column(db.String, nullable=False)
-    value = db.Column(db.Float)
-    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
-    fridge_guid = db.Column(db.Integer, db.ForeignKey('Fridges.fridge_guid'))
 
 class ShoppingLists(db.Model):
     __tablename__ = "ShoppingLists"

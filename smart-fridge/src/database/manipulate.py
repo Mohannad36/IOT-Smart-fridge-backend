@@ -6,15 +6,18 @@ from workspace import getConfigAttribute
 
 from sqlalchemy.dialects.sqlite import insert
 from sqlalchemy import select
+from sqlalchemy import update
 
 from sqlalchemy import func
 
 from sqlalchemy.orm import Session
 
-from .models import db, Users, Fridges
+from .models import db, Users, Fridges, Sensors
 
 sqlEngine = sqlalchemy.create_engine(getConfigAttribute("RestlessDatabaseFilePath"))
 redisUrl = f"rediss://:{getConfigAttribute('RedisSecret')}@unified-amoeba-17090.upstash.io:6379"
+
+fridgeGUID: str = getConfigAttribute("GUID")
 
 def checkIfUserExists(username: str, pincode: int,
                       engine = sqlEngine) -> bool:
@@ -25,12 +28,10 @@ def checkIfUserExists(username: str, pincode: int,
         userFound = True if session.execute(stmt).scalar_one() > 0 else False
     return userFound
 
-
 def insertNewFridgeIfNotExists(engine = sqlEngine) -> bool:
     success: bool = False
     redisConnection: redis.Redis = redis.from_url(redisUrl)
 
-    fridgeGUID: str = getConfigAttribute("GUID")
     fridgeSpecificationAsJson: dict = redisConnection.get("StandardFridge").decode("utf-8")
 
     redisConnection.close()
@@ -40,6 +41,33 @@ def insertNewFridgeIfNotExists(engine = sqlEngine) -> bool:
     with Session(engine) as session:
         success = True if session.execute(stmt).rowcount == 1 else False
         session.commit()
+    return success
+
+def insertSensorValue(sensorGuid: str,
+                      sensorType: str,
+                      sensorValue: float,
+                      fridgeGuid = fridgeGUID,
+                      engine = sqlEngine) -> bool:
+    success: bool = False
+
+    stmt = select(func.count()).select_from(Sensors).where(sensor_guid == sesnsorGuid)
+
+    sensorExists: bool
+    with Session(engine) as session:
+        sensorExists = True if session.execute(stmt).scalar_one() > 0 else False
+
+        if sensorExists:
+            stmt = update(Sensors).where(Sensors.sensor_guid == sensorGuid).values(sensor_type = sensorType,
+                                                                                   value = sensorValue)
+            session.execute(stmt)
+            session.commit()
+        else:
+            stmt = insert(Sensors).values(sensor_guid = sensorGuid,
+                                          sensor_type = sensorType,
+                                          value = sensorValue,
+                                          fridge_guid = fridgeGuid)
+            session.execute(stmt)
+            session.commit()
     return success
 
 
