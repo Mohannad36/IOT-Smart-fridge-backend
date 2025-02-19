@@ -1,4 +1,4 @@
-import valkey
+import redis
 import sqlalchemy
 
 import workspace as workspace
@@ -12,8 +12,10 @@ from sqlalchemy.orm import Session
 
 from .models import db, Users
 
-valkeyUri: str = f"valkeys://default:{workspace.getConfigAttribute('VALKEYSECRET')}@valkey-23c3b453-smart-fridge.b.aivencloud.com:12263"
-valkeyClient = valkey.from_url(valkeyUri) 
+redisConnection: redis.Redis = redis.Redis(host = "unified-amoeba-17090.upstash.io",
+                                           port = 6379,
+                                           password = workspace.getConfigAttribute("RedisSecret"),
+                                           ssl = True)
 
 def checkIfUserExists(engine, 
                       username: str, pincode: int) -> bool:
