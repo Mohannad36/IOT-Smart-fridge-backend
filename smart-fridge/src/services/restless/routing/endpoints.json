@@ -44,6 +44,32 @@
           }
         ]
       }
+    },
+    {
+        "Items" :
+        {
+            "baseRoute" : "/items/",
+            "action" : "ItemResource",
+            "subRoutes" : 
+            [
+                {
+                    "getItemById" : { "action" : "ItemDetailResource" }
+                }
+            ]
+        }
+    },
+    {
+        "ShoppingLists" :
+        {
+            "baseRoute" : "/shoppingLists/",
+            "action" : "ShoppingListResource",
+            "subRoutes" : 
+            [
+                {
+                    "getShoppingListById" : { "action" : "ShoppingListDetailResource" }
+                }
+            ]
+        }
     }
   ]
 }
