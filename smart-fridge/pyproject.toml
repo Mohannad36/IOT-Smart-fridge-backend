@@ -19,6 +19,7 @@ dependencies = [
     "python-dotenv (>=1.0.1,<2.0.0)",
     "flask-swagger (>=0.2.14,<0.3.0)",
     "flask-swagger-ui (>=4.11.1,<5.0.0)",
+    "valkey (>=6.1.0,<7.0.0)",
 ]
 
 [tool.poetry]
