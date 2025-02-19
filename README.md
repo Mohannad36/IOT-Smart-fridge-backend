@@ -36,6 +36,8 @@
 * [waitress](https://pypi.org/project/waitress/)
 * [websockets](https://websockets.readthedocs.io/en/stable/index.html)
 * [python-dotenv](https://pypi.org/project/python-dotenv/)
+* [flask-swagger](https://pypi.org/project/flask-swagger/)
+* [flask-swagger-ui](https://pypi.org/project/flask-swagger-ui/)
 
 
 *** ***

@@ -3,15 +3,13 @@ import asyncio
 import socket
 import sqlalchemy
 
+import database.manipulate as sql
+
 from workspace import workspace
 
 from websockets.asyncio.server import serve
 
 from modules.logging import logger
-
-from sqlalchemy.orm import Session
-from sqlalchemy import select
-from sqlalchemy import func
 
 from database.models import Users
 
@@ -35,11 +33,8 @@ async def proxyServer(websocket, reader, writer):
     async for message in websocket:
         event = json.loads(message)
 
-        userFound: bool = False
-        stmt = select(func.count()).select_from(Users).where(Users.username == event["username"]).where(Users.pincode  == event["pincode"])
-        with Session(sqlEngine) as session:
-            userFound = True if session.execute(stmt).scalar_one() > 0 else False
-
+        userFound: bool = sql.checkIfUserExists(sqlEngine, 
+                                                event["username"], event["pincode"])
         if not userFound:
             await websocket.close()
             return
@@ -55,7 +50,7 @@ async def proxyServer(websocket, reader, writer):
 async def main() -> None:
     log.info("Started")
     proxyReader, proxyWriter = await asyncio.open_connection("127.0.0.1", 12444)
-    async with serve(partial(proxyServer, reader=proxyReader, writer=proxyWriter), "localhost", 13000):
+    async with serve(partial(proxyServer, reader=proxyReader, writer=proxyWriter), "127.0.0.1", 13000):
         await asyncio.get_running_loop().create_future()
     log.info("Finished")
 

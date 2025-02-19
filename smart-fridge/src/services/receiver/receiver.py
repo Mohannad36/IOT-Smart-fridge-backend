@@ -7,6 +7,7 @@ from modules.logging import logger
 from queue import LifoQueue
 from enum import Enum
 
+import threading
 from threading import Thread
 
 from database.models import db, Users
@@ -15,6 +16,11 @@ from sqlalchemy import insert
 class Tag(str, Enum):
     SENSOR = "SENSOR"
     TYPE = "TYPE"
+
+class ClientState(Enum):
+    IDLE = 0
+    RUNNING = 1
+    DISCONNECTED = 2
 
 log: logger = logger("receiver-service.log", "INFO")
 
@@ -51,26 +57,33 @@ class ServerConnectionHandler(Thread):
         self.address = address
         self.maxReadPerPacketInBytes = packetReadMaxSize
 
+        self.state = ClientState.IDLE
+
     def run(self):
         dataHandler = Thread(target = self.interpretData, daemon=True)
         dataHandler.start()
+
+        self.state = ClientState.RUNNING
         while True:
             self.receive()
 
     def receive(self):
         data: str = self.connection.recv(self.maxReadPerPacketInBytes)
-        if data:
-            log.info(f"Incoming RAW data :: {data} . . .")
+        if not data:
+            self.state = ClientState.DISCONNECTED
+            return
 
-            buffer: str = ""
-            buffer += data.decode()
-            while not buffer.endswith("<END>"):
-                buffer += self.connection.recv(self.maxReadPerPacketInBytes).decode()
-            for bufferData in buffer.split("<END>"):
-                if len(bufferData) > 0:
-                    newMessage: Message = Message(bufferData)
-                    self.inData.put(newMessage)
+        log.info(f"Incoming RAW data :: {data} . . .")
 
+        buffer: str = ""
+        buffer += data.decode()
+        while not buffer.endswith("<END>"):
+            buffer += self.connection.recv(self.maxReadPerPacketInBytes).decode()
+        for bufferData in buffer.split("<END>"):
+            if len(bufferData) > 0:
+                newMessage: Message = Message(bufferData)
+                self.inData.put(newMessage)
+            
     def interpretData(self):
         while True:
             if not self.inData.empty():
@@ -102,6 +115,12 @@ class ServerSocket:
 
         self.clients = []
 
+    def removeDisconnectedClients(self) -> None:
+        for client in self.clients:
+            if (client.state == ClientState.DISCONNECTED):
+                self.clients.remove(client)
+        threading.Timer(15, self.removeDisconnectedClients).start()
+
     def handleNewConnection(self) -> None:
         clientSocket, address = self.receiver.accept()
 
@@ -120,8 +139,8 @@ class ServerSocket:
         log.info(f"Server device GUID is {guid()} . . .")
 
         while True:
+            self.removeDisconnectedClients()
             self.handleNewConnection()
-
 
 def main() -> None:
     server: ServerSocket = ServerSocket()
