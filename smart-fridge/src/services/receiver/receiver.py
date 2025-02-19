@@ -11,6 +11,7 @@ import threading
 from threading import Thread
 
 from database.models import db, Users
+from database.manipulate import insertSensorValue
 from sqlalchemy import insert
 
 class Tag(str, Enum):
@@ -83,7 +84,7 @@ class ServerConnectionHandler(Thread):
             if len(bufferData) > 0:
                 newMessage: Message = Message(bufferData)
                 self.inData.put(newMessage)
-            
+
     def interpretData(self):
         while True:
             if not self.inData.empty():
@@ -93,7 +94,12 @@ class ServerConnectionHandler(Thread):
                 for tag, value in message.headers.items():
                     match tag:
                         case Tag.SENSOR:
-                            pass
+                            sensorGuid = message.headers["ID"]
+                            sensorType = value
+                            sensorValue = self.data
+                            insertSensorValue(sensorGuid,
+                                              sensorType,
+                                              sensorValue)
                         case Tag.TYPE:
                             if value == "ping":
                                 self.connection.send("pong".encode())
