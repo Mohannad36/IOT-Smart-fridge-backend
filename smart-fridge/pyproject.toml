@@ -28,6 +28,8 @@ packages = [ {include = "services/restless", from = "src"},
 	         {include = "services/receiver", from = "src"},
              {include = "services/websocket-proxy", from = "src"},
 
+             {include = "database", from = "src"},
+
              {include = "modules", from = "src"},
 
              {include = "src" } ]
