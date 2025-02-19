@@ -94,10 +94,9 @@ def main() -> None:
     setupCaching()
     setupLogging()
 
-    sql.insertNewFridgeIfNotExists()
-
     while True:
         identifyRunningServices()
+        sql.insertNewFridgeIfNotExists()
         time.sleep(30)
 
 if __name__ == "__main__":
