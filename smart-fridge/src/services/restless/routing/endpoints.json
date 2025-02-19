@@ -8,7 +8,7 @@
         "action" : null,
         "subRoutes" : 
         [ 
-          { "getById" : { "action" : "GetWeightSensorById" } },
+          { "getById" : { "action" : "WeightSensorById" } },
           { "getOccupiedById" : { "action" : "IsWeightSensorOccupiedById" } }
         ]
       }
@@ -26,6 +26,31 @@
       }
     },
     {
+        "Items" :
+        {
+            "baseRoute" : "/items/",
+            "action" : "AllItems",
+            "subRoutes" : 
+            [
+                {
+                    "getItemById" : { "action" : "ItemById" }
+                }
+            ]
+        }
+    },
+    {
+        "ShoppingLists" :
+        {
+            "baseRoute" : "/shoppingLists/",
+            "action" : "AllShoppingLists",
+            "subRoutes" : 
+            [
+                {
+                    "getShoppingListById" : { "action" : "ShoppingListById" }
+                }
+            ]
+        }
+    },
       "Documentation/Swagger" :
       {
         "baseRoute" : "/swagger.json/",

@@ -6,27 +6,32 @@ from datetime import datetime
 db = SQLAlchemy()
 
 class Users(db.Model):
-    __tablename__ = 'Users'
+    __tablename__ = "Users"
+
     user_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String, nullable=False)
     pincode = db.Column(db.Double, nullable=False)
     active = db.Column(db.Boolean, nullable=False, default=False)
 
 class Fridges(db.Model):
-    __tablename__ = 'Fridges'
+    __tablename__ = "Fridges"
+
     fridge_guid = db.Column(db.String, primary_key=True)
     model = db.Column(db.JSON, nullable=False)
 
 class Connections(db.Model):
-    __tablename__ = 'Connections'
+    __tablename__ = "Connections"
+
     connection_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     fridge_guid = db.Column(db.String, db.ForeignKey('Fridges.fridge_guid'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('Users.user_id'), nullable=False)
 
 class Items(db.Model):
-    __tablename__ = 'Items'
+    __tablename__ = "Items"
+    __table_args__ = { "extend_exising" : True }
+
     item_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String, nullable=False)
+    name = db.Column(db.String(50), nullable=False)
     quantity = db.Column(INTEGER(unsigned=True))
     expiration_date = db.Column(db.Date)
 
@@ -36,8 +41,12 @@ class Items(db.Model):
 
     CheckConstraint("quantity > 0", name="Check for minimum quantity")
 
+    def serialize(self):
+        return { "id" : self.item_id, "name" : self.name }
+
 class Sensors(db.Model):
-    __tablename__ = 'Sensors'
+    __tablename__ = "Sensors"
+
     sensor_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     sensor_type = db.Column(db.String, nullable=False)
     value = db.Column(db.Float)
@@ -45,10 +54,15 @@ class Sensors(db.Model):
     fridge_guid = db.Column(db.Integer, db.ForeignKey('Fridges.fridge_guid'))
 
 class ShoppingLists(db.Model):
-    __tablename__ = 'ShoppingLists'
+    __tablename__ = "ShoppingLists"
+    __table_args__ = { "extend_existing" : True }
+
     list_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String, nullable=False)
+    name = db.Column(db.String(50), nullable=False)
     created_date = db.Column(db.Date)
 
     fridge_guid = db.Column(db.String, db.ForeignKey('Items.fridge_guid'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('Users.user_id'), nullable=False)
+
+    def serialize(self):
+        return { "id" : self.list_id, "name" : self.name }
