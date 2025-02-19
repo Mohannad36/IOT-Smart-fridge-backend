@@ -28,7 +28,7 @@ class Connections(db.Model):
 
 class Items(db.Model):
     __tablename__ = "Items"
-    __table_args__ = { "extend_exising" : True }
+    extend_exising = True
 
     item_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(50), nullable=False)
@@ -55,7 +55,7 @@ class Sensors(db.Model):
 
 class ShoppingLists(db.Model):
     __tablename__ = "ShoppingLists"
-    __table_args__ = { "extend_existing" : True }
+    extend_existing = True
 
     list_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(50), nullable=False)
