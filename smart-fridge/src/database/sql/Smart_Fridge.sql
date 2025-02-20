@@ -15,6 +15,8 @@ CREATE TABLE IF NOT EXISTS Connections (
     fridge_guid TEXT NOT NULL,
     user_id INTEGER NOT NULL,
 
+    session_start_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
     FOREIGN KEY (fridge_guid) REFERENCES Fridges(fridge_guid),
     FOREIGN KEY (user_id) REFERENCES Users(user_id)
 );

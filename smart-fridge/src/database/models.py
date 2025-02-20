@@ -11,7 +11,7 @@ class Users(db.Model):
     user_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String, nullable=False)
     pincode = db.Column(db.Double, nullable=False)
-    active = db.Column(db.Boolean, nullable=False, default=False)
+    active = db.Column(db.Boolean, nullable=True, default=False)
 
 class Fridges(db.Model):
     __tablename__ = "Fridges"
@@ -25,6 +25,8 @@ class Connections(db.Model):
     connection_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     fridge_guid = db.Column(db.String, db.ForeignKey('Fridges.fridge_guid'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('Users.user_id'), nullable=False)
+
+    session_start_timestamp = db.Column(db.DateTime, default=datetime.utcnow)
 
 class Sensors(db.Model):
     __tablename__ = "Sensors"
