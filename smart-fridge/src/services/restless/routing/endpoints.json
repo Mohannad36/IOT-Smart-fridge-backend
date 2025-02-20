@@ -14,18 +14,6 @@
       }
     },
     {
-      "User" :
-      {
-        "baseRoute" : "/user/",
-        "action" : null,
-        "subRoutes" : 
-        [
-          { "getById" : { "action": null } },
-          { "getAll" : { "action" : null } }
-        ]
-      }
-    },
-    {
         "Items" :
         {
             "baseRoute" : "/items/",
