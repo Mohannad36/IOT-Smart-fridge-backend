@@ -142,6 +142,12 @@ def queryShoppingList(listId,
         result = Items.query.get_or_404(listId)
     return result
 
+def queryAllUsers(engine = sqlEngine):
+    result: any = None
+    with Session(engine) as session:
+        result = Users.query.all()
+    return result
+
 
 
 

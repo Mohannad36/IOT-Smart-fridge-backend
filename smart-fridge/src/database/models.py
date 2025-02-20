@@ -14,6 +14,9 @@ class Users(db.Model):
     pincode = db.Column(db.Double, nullable=False)
     active = db.Column(db.Boolean, nullable=True, default=False)
 
+    def serialize(self):
+        return { "username" : self.username, "active" : self.active }
+
 class Fridges(db.Model):
     __tablename__ = "Fridges"
 
