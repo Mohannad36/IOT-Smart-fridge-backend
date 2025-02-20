@@ -7,12 +7,13 @@ from workspace import getConfigAttribute
 from sqlalchemy.dialects.sqlite import insert
 from sqlalchemy import select
 from sqlalchemy import update
+from sqlalchemy import delete
 
 from sqlalchemy import func
 
 from sqlalchemy.orm import Session
 
-from .models import db, Users, Fridges, Sensors
+from .models import db, Users, Fridges, Sensors, Connections
 
 sqlEngine = sqlalchemy.create_engine(getConfigAttribute("RestlessDatabaseFilePath"))
 redisUrl = f"rediss://:{getConfigAttribute('RedisSecret')}@unified-amoeba-17090.upstash.io:6379"
@@ -69,6 +70,53 @@ def insertSensorValue(sensorGuid: str,
             session.execute(stmt)
             session.commit()
     return success
+
+def insertNewConnection(username,
+                        fridgeGuid = fridgeGUID,
+                        engine = sqlEngine) -> bool:
+    success: bool = False
+
+    with Session(engine) as session:
+        result = session.scalars(select(Users).where(username == username)).first()
+        if result != None:
+            stmt = select(func.count()).select_from(Connections).where(Connections.user_id == result.user_id)
+            userFound = True if session.execute(stmt).scalar_one() > 0 else False
+
+            if not userFound:
+                stmt = insert(Connections).values(fridge_guid = fridgeGuid,
+                                                  user_id = result.user_id)
+                session.execute(stmt)
+                session.commit()
+
+            stmt = update(Users).where(Users.username == username).values(active = True)
+            session.execute(stmt)
+            session.commit()
+    return success
+
+def deleteExistingConnection(userId,
+                             engine = sqlEngine):
+    success: bool = False
+
+    with Session(engine) as session:
+        stmt = delete(Connections).where(Connections.user_id == userId)
+        session.execute(stmt)
+        session.commit()
+
+        stmt = update(Users).where(Users.user_id == userId).values(active = False)
+        session.execute(stmt)
+        session.commit()
+    return success
+
+def selectUserUsingUsername(username,
+                            engine = sqlEngine):
+    result: any = None
+    with Session(engine) as session:
+        result = session.scalars(select(Users).where(username == username)).first()
+        if result != None:
+            return result
+    return result
+
+
 
 
 
