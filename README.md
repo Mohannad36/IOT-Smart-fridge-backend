@@ -38,6 +38,7 @@
 * [python-dotenv](https://pypi.org/project/python-dotenv/)
 * [flask-swagger](https://pypi.org/project/flask-swagger/)
 * [flask-swagger-ui](https://pypi.org/project/flask-swagger-ui/)
+* [redis](https://redis.io/docs/latest/develop/clients/redis-py/)
 
 
 *** ***
