@@ -1,7 +1,8 @@
+import datetime
+
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import CheckConstraint
 from sqlalchemy.dialects.mysql import INTEGER
-from datetime import datetime
 
 db = SQLAlchemy()
 
@@ -26,7 +27,7 @@ class Connections(db.Model):
     fridge_guid = db.Column(db.String, db.ForeignKey('Fridges.fridge_guid'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('Users.user_id'), nullable=False)
 
-    session_start_timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+    session_start_timestamp = db.Column(db.DateTime, default=datetime.datetime.utcnow)
 
 class Sensors(db.Model):
     __tablename__ = "Sensors"
@@ -36,7 +37,7 @@ class Sensors(db.Model):
 
     value = db.Column(db.Float)
 
-    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+    timestamp = db.Column(db.DateTime, default=datetime.datetime.utcnow)
     fridge_guid = db.Column(db.Integer, db.ForeignKey('Fridges.fridge_guid'))
 
 class Items(db.Model):
@@ -45,8 +46,8 @@ class Items(db.Model):
 
     item_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(50), nullable=False)
-    quantity = db.Column(INTEGER(unsigned=True))
-    expiration_date = db.Column(db.Date)
+    quantity = db.Column(INTEGER(unsigned=True), default=1)
+    expiration_date = db.Column(db.Date, default=datetime.date(1, 1, 1))
 
     fridge_guid = db.Column(db.String, db.ForeignKey('Fridges.fridge_guid'), nullable=False)
     list_id = db.Column(db.Integer, db.ForeignKey('ShoppingLists.list_id'), nullable=False)

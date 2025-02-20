@@ -13,7 +13,7 @@ from sqlalchemy import func
 
 from sqlalchemy.orm import Session
 
-from .models import db, Users, Fridges, Sensors, Connections
+from .models import db, Users, Fridges, Sensors, Connections, Items
 
 sqlEngine = sqlalchemy.create_engine(getConfigAttribute("RestlessDatabaseFilePath"))
 redisUrl = f"rediss://:{getConfigAttribute('RedisSecret')}@unified-amoeba-17090.upstash.io:6379"
@@ -116,6 +116,31 @@ def selectUserUsingUsername(username,
             return result
     return result
 
+def queryAllItems(engine = sqlEngine):
+    result: any = None
+    with Session(engine) as session:
+        result = Items.query.all()
+    return result
+
+def queryItem(itemId,
+              engine = sqlEngine):
+    result: any = None
+    with Session(engine) as session:
+        result = Items.query.get_or_404(itemId)
+    return result
+
+def queryAllShoppingLists(engine = sqlEngine):
+    result: any = None
+    with Session(engine) as session:
+        result = Items.query.all()
+    return result
+
+def queryShoppingList(listId,
+                      engine = sqlEngine):
+    result: any = None
+    with Session(engine) as session:
+        result = Items.query.get_or_404(listId)
+    return result
 
 
 
