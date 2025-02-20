@@ -20,9 +20,7 @@
             "action" : "AllItems",
             "subRoutes" : 
             [
-                {
-                    "getItemById" : { "action" : "ItemById" }
-                }
+                { "getItemById" : { "action" : "ItemById" } }
             ]
         }
     },
@@ -33,11 +31,21 @@
             "action" : "AllShoppingLists",
             "subRoutes" : 
             [
-                {
-                    "getShoppingListById" : { "action" : "ShoppingListById" }
-                }
+                { "getShoppingListById" : { "action" : "ShoppingListById" } }
             ]
         }
+    },
+    {
+      "Users" : 
+      {
+        "baseRoute" : "/users/",
+	"action" : "AllUsers",
+	"subRoutes" : 
+	[
+	  { "getUserByUsername" : { "action" : "UserByUsername" } },
+	  { "login" : { "action" : "UserLogin" } }
+	]
+      }
     },
     {
       "Documentation/Swagger" :

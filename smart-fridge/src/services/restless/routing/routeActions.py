@@ -1,4 +1,4 @@
-from flask import jsonify
+from flask import jsonify, request
 from flask_restful import Resource
 
 from database.models import Items, ShoppingLists
@@ -77,6 +77,27 @@ class ShoppingListById(Resource):
 
         return '', 204
 
+class AllUsers(Resource):
+    def get(self):
+        allUsers = sql.queryAllUsers()
+
+        return jsonify([user.serialize() for user in allUsers])
+
+class UserByUsername(Resource):
+    def get(self, username):
+        user = sql.selectUserUsingUsername(username)
+
+        return jsonify(user.serialize())
+
+class UserLogin(Resource):
+    def post(self):
+        data = request.get_json()        
+        userExists: bool = sql.checkIfUserExists(data["username"], data["pincode"])
+
+        if userExists:
+            return jsonify({ "login" : "success" })
+        else:
+            return jsonify({ "login" : "failed", "reason" : "No user with the specified combination exists" })
 
 class SwaggerJson(Resource):
     def get(self):
@@ -268,6 +289,81 @@ class SwaggerJson(Resource):
                                     {
                                         "name": { "type": "string" },
                                         "created": { "type": "string" }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "/users": 
+                {
+                    "get": 
+                    {
+                        "summary": "Get all users currently stored in the database",
+                        "description": "Returns a list of JSON string of users",
+                        "responses": 
+                        {
+                            "200": 
+                            {
+                                "description": "Success",
+                                "schema": 
+                                {
+                                    "type" : "array",
+                                    "items" : 
+                                    {
+                                        "type": "object",
+                                        "properties": 
+                                        {
+                                            "username": { "type": "string" },
+                                            "active": { "type": "boolean" }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "/users/getUserByUsername": 
+                {
+                    "get": 
+                    {
+                        "summary": "Get a user currently stored in the database",
+                        "description": "Returns a JSON string of a user",
+                        "responses": 
+                        {
+                            "200": 
+                            {
+                                "description": "Success",
+                                "schema": 
+                                {
+                                    "type": "object",
+                                    "properties": 
+                                    {
+                                        "username": { "type": "string" },
+                                        "active": { "type": "boolean" }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "/users/login": 
+                {
+                    "post": 
+                    {
+                        "summary": "Attempt to login user",
+                        "description": "Returns a JSON string with information about the login attempt",
+                        "responses": 
+                        {
+                            "200": 
+                            {
+                                "description": "Success",
+                                "schema": 
+                                {
+                                    "type": "object",
+                                    "properties": 
+                                    {
+                                        "login": { "type": "string" }
                                     }
                                 }
                             }
