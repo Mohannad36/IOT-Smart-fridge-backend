@@ -8,6 +8,7 @@ import database.manipulate as sql
 from workspace import workspace
 
 from websockets.asyncio.server import serve
+from websockets.exceptions import ConnectionClosedOK
 
 from modules.logger import logger
 
@@ -15,11 +16,21 @@ from database.models import Users
 
 from functools import partial
 
-#sqlEngine = sqlalchemy.create_engine(workspace.getConfigAttribute("RestlessDatabaseFilePath"))
-
 connections = {}
 
 log: logger = logger("websocket-proxy-service.log", "INFO")
+
+async def checkIfConnectionIsAlive(websocket,
+                                   username,
+                                   interval):
+    userId = sql.selectUserUsingUsername(username).user_id
+    while True:
+        try:
+            await websocket.ping()
+        except (TimeoutError, ConnectionClosedOK):
+            sql.deleteExistingConnection(userId)
+            break
+        await asyncio.sleep(interval)
 
 async def sendToReverseProxy(message, reader, writer):
     writer.write(message.encode())
@@ -38,8 +49,13 @@ async def proxyServer(websocket, reader, writer):
             await websocket.close()
             return
 
-        response = await sendToReverseProxy(event["data"], reader, writer)
+        sql.insertNewConnection(event["username"])
+        asyncio.create_task(checkIfConnectionIsAlive(websocket,
+                                                     event["username"],
+                                                     30))
 
+
+        response = await sendToReverseProxy(event["data"], reader, writer)
         log.info(f"Data received :: {event['data']} . . .")
 
         if len(response) > 0:
