@@ -18,6 +18,14 @@ https://arduino.esp8266.com/stable/package_esp8266com_index.json
 
 
 
-### 3. Select Your ESP8266 Board
+### 3. Select and install ESP8266 library
+
 1. Got to **Tools > Board**.
 2. Select NodeMCU ESP-12E Module   
+
+
+
+### Testing
+
+
+
