@@ -27,7 +27,8 @@ async def checkIfConnectionIsAlive(websocket,
     while True:
         try:
             await websocket.ping()
-        except (TimeoutError, ConnectionClosedOK):
+        except (TimeoutError, ConnectionClosedOK) as errno:
+            log.info("Error" + str(errno))
             sql.deleteExistingConnection(userId)
             break
         await asyncio.sleep(interval)
