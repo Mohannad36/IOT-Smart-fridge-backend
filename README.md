@@ -81,7 +81,7 @@ poetry install
 
 ### How to run different services 
 ```
-cd IOT-Smart-fridge-backend/smart-fridge
+cd IOT-Smart-fridge-backend/smart-fridge/src
 ```
 
 | Command                       | Action                                                |
@@ -94,7 +94,7 @@ cd IOT-Smart-fridge-backend/smart-fridge
 
 ### How to run tests
 ```
-cd IOT-Smart-fridge-backend/smart-fridge
+cd IOT-Smart-fridge-backend/smart-fridge/src
 poetry run pytest
 ```
 
