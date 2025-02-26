@@ -120,7 +120,6 @@ def queryAllItems(engine = sqlEngine):
     result: any = None
     with Session(engine) as session:
         result = Items.query.all()
-        print("testing")
     return result
 
 def queryItem(itemId,
