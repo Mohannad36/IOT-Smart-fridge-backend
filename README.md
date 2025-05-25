@@ -48,7 +48,9 @@
 
 1. **Rasberry Pi with Front Display**: Mounted on the fridge door, serves as the main control unit and has a interactable UI for ease of use 
 2. **Multiple ESP32 Inside the Fridge**: Manages internal sensors and cameras
+## 👥 Teammedlemmar
 
+- mohannad36 (Mohannad Baker)
 ### Components List
 
 
